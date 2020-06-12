@@ -6,16 +6,26 @@ An application that shows real-time data provided by [Smartable](https://smartab
 # Table Of Contents
 1. [Installation](#installation)
     + [Prerequisites](#prerequisites)
+    + [Setting your API key](#setting-your-api-key)
     + [With Docker](#with-docker)
     + [The Default Way](#the-default-way)
     + [Configuration](#configuration)
-5. [Contributing](#contributing)
-6. [License](#license)
+2. [Contributing](#contributing)
+3. [License](#license)
 
 # Installation
 ## Prerequisites
 * [Quasar CLI](https://quasar.dev/quasar-cli/installation)
+* [Smartable API key](smartable.ai)
 * [Docker](https://www.docker.com/get-started) (optional)
+
+## Setting your API key
+* Sign up for an account on Smartable and [retreive your API key](https://developer.smartable.ai/api-details#api=coronavirus&operation=stats)
+* copy the .env.example file and name it .env
+```shell
+cp .env.example .env
+```
+* Set the API key from smartable as the API_KEY environment variable
 
 ## With docker
 * Clone the repository
@@ -51,8 +61,8 @@ If you use VS Code (recommended) there are some handy editor settings and plugin
 
 # Contributing
 Please see the following files if you want to contribute to this project:
-* [Code of Conduct](CODE_OF_CONDUCT.md)
-* [Contributing](CONTRIBUTING.md)
+* [Code of Conduct](./.github/CODE_OF_CONDUCT.md)
+* [Contributing](./.github/CONTRIBUTING.md)
 
 # License
 This package is released under the [MIT License](LICENSE)
