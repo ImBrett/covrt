@@ -1,6 +1,6 @@
 import { ActionContext } from 'vuex';
 import { StatsStateInterface } from './state';
-import { CovidService } from '../../services/api.service';
+import { StatsService } from '../../services/api.service';
 import {
   SET_STATS,
   SET_LOADING_STATE,
@@ -19,7 +19,7 @@ interface StatsActionsInterface {
 export const StatsActions: StatsActionsInterface = {
   async [FETCH_STATS]({ commit }, country = { value: 'global', label: 'Global' }) {
     commit(`app/${SET_LOADING_STATE}`, true, { root: true });
-    const response = await CovidService.fetchStats(country.value);
+    const response = await StatsService.fetchStats(country.value);
     commit(SET_STATS, {
       totalConfirmedCases: response.stats.totalConfirmedCases,
       totalRecoveredCases: response.stats.totalRecoveredCases,
