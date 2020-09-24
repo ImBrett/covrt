@@ -1,26 +1,19 @@
 import Vue from 'vue';
-import axios, { AxiosResponse } from 'axios';
-import VueAxios from 'vue-axios';
-import { API_URL } from './config';
+import { AxiosResponse } from 'axios';
 
+/**
+ * Checks the status of the response for errors
+ *
+ * @param response The response to check
+ * @return boolean
+ */
 const checkResponse = ({ status, data }: AxiosResponse): boolean => {
+  if (data.errors) {
+    throw new Error(data.errors);
+  }
+
   switch (status) {
-    case 200: {
-      if (data.errors) {
-        throw new Error(data.errors);
-      }
-      return true;
-    }
-    case 201: {
-      if (data.errors) {
-        throw new Error(data.errors);
-      }
-      return true;
-    }
-    case 204: {
-      if (data.errors) {
-        throw new Error(data.errors);
-      }
+    case 200: { // SUCCESS
       return true;
     }
     default: {
@@ -54,23 +47,33 @@ export const ApiService = {
       if (checkResponse(response)) {
         return response.data;
       }
-      return response;
+      return response.data.errors;
     } catch (e) {
-      throw new Error(`[C19T] API error: ${e}`);
+      throw new Error(`[CVRT] API error: ${e}`);
     }
   },
 };
 
-export const CovidService = {
+export const StatsService = {
+  /**
+   * Queries for stats by country
+   *
+   * @param country The country to search
+   */
   async fetchStats (country = 'global') {
-    const response = await ApiService.get(`stats/v1/${country}/`);
+    const response = await ApiService.get(`stats/${country}`);
     return response;
   },
 };
 
 export const NewsService = {
+  /**
+   * Queries for news by country
+   *
+   * @param country The country to search
+   */
   async fetchNews (country = 'global') {
-    const response = await ApiService.get(`news/v1/${country}/`);
+    const response = await ApiService.get(`news/${country}`);
     return response;
   },
 };

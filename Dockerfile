@@ -1,5 +1,5 @@
 # develop stage
-FROM node:13.14-alpine as develop-stage
+FROM node:current-alpine as develop-stage
 WORKDIR /app
 COPY package*.json ./
 RUN yarn global add @quasar/cli
@@ -12,7 +12,8 @@ RUN yarn lint --fix
 RUN quasar build -m pwa --modern
 
 # production stage
-FROM nginx:1.17.5-alpine as production-stage
+FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist/pwa /usr/share/nginx/html
-EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && \
+    nginx -g 'daemon off;'

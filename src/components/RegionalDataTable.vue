@@ -11,7 +11,9 @@
       row-key="region"
     >
       <template v-slot:top>
-        <div class="text-h5">Regional Data</div>
+        <div class="text-h5">
+          Regional Data
+        </div>
         <q-space />
         <q-input
           dense
@@ -28,6 +30,8 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable operator-linebreak */
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import { BreakDown } from './models';
@@ -57,46 +61,55 @@ export default class RegionalDataTable extends Vue {
     return row.location.countryOrRegion;
   }
 
-  columns = [
-    {
-      name: 'region',
-      required: true,
-      label: 'Region',
-      align: 'left',
-      field: (row: BreakDown) => this.getProvinceOrCountryDisplay(row),
-      sortable: true,
-    },
-    {
-      name: 'confirmed',
-      align: 'right',
-      label: 'Confirmed',
-      field: (row: BreakDown) => row.totalConfirmedCases,
-      sortable: true,
-    },
-    {
-      name: 'active',
-      align: 'right',
-      label: 'Active',
-      field: (row: BreakDown) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
-        row.totalConfirmedCases - (row.totalRecoveredCases + row.totalDeaths),
-      sortable: true,
-    },
-    {
-      name: 'recovered',
-      align: 'right',
-      label: 'Recovered',
-      field: (row: BreakDown) => row.totalRecoveredCases,
-      sortable: true,
-    },
-    {
-      name: 'deaths',
-      align: 'right',
-      label: 'Deaths',
-      field: (row: BreakDown) => row.totalDeaths,
-      sortable: true,
-    },
-  ];
+  get columns() {
+    return [
+      {
+        name: 'region',
+        required: true,
+        label: 'Region',
+        align: 'left',
+        field: (row: BreakDown) => this.getProvinceOrCountryDisplay(row),
+        sortable: true,
+      },
+      {
+        name: 'confirmed',
+        align: 'right',
+        label: 'Confirmed',
+        field: (row: BreakDown) => row.totalConfirmedCases,
+        format: (val: number, row: BreakDown) =>
+          `${val} (+${row.newlyConfirmedCases})`,
+        sortable: true,
+      },
+      {
+        name: 'active',
+        align: 'right',
+        label: 'Active',
+        field: (row: BreakDown) =>
+          row.totalConfirmedCases - (row.totalRecoveredCases + row.totalDeaths),
+        format: (val: number, row: BreakDown) =>
+          `${val} (+${row.newlyConfirmedCases -
+            (row.newlyRecoveredCases + row.newDeaths)})`,
+        sortable: true,
+      },
+      {
+        name: 'recovered',
+        align: 'right',
+        label: 'Recovered',
+        field: (row: BreakDown) => row.totalRecoveredCases,
+        format: (val: number, row: BreakDown) => `${val}
+          (+${row.newlyRecoveredCases})`,
+        sortable: true,
+      },
+      {
+        name: 'deaths',
+        align: 'right',
+        label: 'Deaths',
+        field: (row: BreakDown) => row.totalDeaths,
+        format: (val: number, row: BreakDown) => `${val} (+${row.newDeaths})`,
+        sortable: true,
+      },
+    ];
+  }
 }
 </script>
 
