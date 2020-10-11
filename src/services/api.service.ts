@@ -22,14 +22,8 @@ const checkResponse = ({ status, data }: AxiosResponse): boolean => {
   }
 };
 
-export const initApiService = (): void => {
-  Vue.use(VueAxios, axios);
-  Vue.axios.defaults.baseURL = API_URL;
-  Vue.axios.defaults.headers['X-RapidAPI-Key'] = process.env.API_KEY;
-};
-
 export const ApiService = {
-  async query (resource: string, params: unknown) {
+  async query(resource: string, params: unknown) {
     try {
       const response = await Vue.axios.get(`${resource}/${params}`);
       if (checkResponse(response)) {
@@ -41,7 +35,7 @@ export const ApiService = {
     }
   },
 
-  async get (resource: string) {
+  async get(resource: string) {
     try {
       const response = await Vue.axios.get(resource);
       if (checkResponse(response)) {
@@ -60,8 +54,8 @@ export const StatsService = {
    *
    * @param country The country to search
    */
-  async fetchStats (country = 'global') {
-    const response = await ApiService.get(`stats/${country}`);
+  async fetchStats(country = 'global') {
+    const response = await ApiService.get(`stats/v1/${country}/`);
     return response;
   },
 };
@@ -72,8 +66,8 @@ export const NewsService = {
    *
    * @param country The country to search
    */
-  async fetchNews (country = 'global') {
-    const response = await ApiService.get(`news/${country}`);
+  async fetchNews(country = 'global') {
+    const response = await ApiService.get(`news/v1/${country}/`);
     return response;
   },
 };
