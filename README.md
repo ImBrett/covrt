@@ -16,16 +16,16 @@ An application that shows real-time data provided by [Smartable](https://smartab
 # Installation
 ## Prerequisites
 * [Quasar CLI](https://quasar.dev/quasar-cli/installation)
-* [Smartable API key](smartable.ai)
+* [Rapid API key](rapidapi.com)
 * [Docker](https://www.docker.com/get-started) (optional)
 
 ## Setting your API key
-* Sign up for an account on Smartable and [retreive your API key](https://developer.smartable.ai/api-details#api=coronavirus&operation=stats)
+* Sign up for an account on RapidAPI and [subscribe to smartables API](https://rapidapi.com/SmartableAI/api/coronavirus-smartable)
 * copy the .env.example file and name it .env
 ```shell
 cp .env.example .env
 ```
-* Set the API key from smartable as the API_KEY environment variable
+* Set the API key from RapidAPI as the API_KEY environment variable
 
 ## With docker
 * Clone the repository
@@ -35,7 +35,7 @@ git clone https://github.com/ImBrett/covrt.git
 
 * Run the container
 ```shell
-docker-compose up --build
+docker-compose up
 ```
 
 ## The default way
@@ -51,7 +51,7 @@ yarn
 
 * Serve for development
 ```shell
-quasar dev -m pwa --modern
+quasar dev
 ```
 
 ## Configuration
