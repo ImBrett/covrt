@@ -66,8 +66,17 @@ export default class CountrySearchBar extends Vue {
   fetchNews!: (country: { value: string; label: string }) => Promise<void>;
 
   getCountryData(country: { value: string; label: string }) {
-    this.fetchStats(country);
-    this.fetchNews(country);
+    // Only get the data needed for the current page
+    switch (this.$router.currentRoute.name) {
+      case 'app.stats':
+        this.fetchStats(country);
+        break;
+      case 'app.news':
+        this.fetchNews(country);
+        break;
+      default:
+        break;
+    }
   }
 
   resetSearch() {
