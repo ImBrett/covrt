@@ -1,0 +1,19 @@
+#!/bin/bash
+
+FILES_TO_COMMIT=$(git diff --staged --diff-filter=ACMTUXB --name-only | grep -E \\.[tj]sx?$)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+if [ -z "$FILES_TO_COMMIT" ]; then
+  echo "No files were found to commit"
+  exit 0
+fi
+
+echo "Linting files..."
+if ! yarn lint --fix --max-warnings 0 $FILES_TO_COMMIT; then
+  echo "${bold}Linting Failed"
+  exit 1
+fi
+
+echo "${bold}Linted:${normal}"
+echo $FILES_TO_COMMIT | tr ' ' '\n'
