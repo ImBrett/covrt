@@ -2,6 +2,7 @@
 version: '3.7'
 services:
   covrt:
+    container_name: covrt
     build:
       context: .
       target: 'develop-stage'
@@ -9,4 +10,4 @@ services:
     - '8080:8080'
     volumes:
     - '.:/app'
-    command: /bin/sh -c "yarn && quasar dev -m pwa --modern"
+    command: /bin/sh -c "yarn && quasar dev"

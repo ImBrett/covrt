@@ -8,8 +8,7 @@ COPY . .
 # build stage
 FROM develop-stage as build-stage
 RUN yarn
-RUN yarn lint --fix
-RUN quasar build -m pwa --modern
+RUN quasar build -m pwa
 
 # production stage
 FROM nginx:stable-alpine as production-stage
