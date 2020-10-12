@@ -3,6 +3,7 @@ version: '3.7'
 services:
   covrt:
     container_name: covrt
+    env_file: .env
     build:
       context: .
       target: 'develop-stage'
